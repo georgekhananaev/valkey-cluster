@@ -1,31 +1,28 @@
 # Valkey Cluster Development Setup
 
-![Valkey Logo](https://raw.githubusercontent.com/valkey-io/valkey/master/docs/images/valkey-color-1-1.svg)
+![Valkey Logo](https://valkey.io/img/valkey-horizontal.svg)
 
-A lightweight Docker setup for spawning a multi-node Valkey cluster on your local machine. Perfect for development, testing, and benchmarking without the overhead of a full distributed deployment. This project is specifically designed to imitate AWS Valkey/ElastiCache Redis clusters locally for development purposes.
+I built this lightweight Docker setup to quickly spin up a multi-node Valkey cluster on my local machine. It's been super useful for development, testing, and benchmarking without the headache of a full distributed deployment. I specifically designed this to mimic AWS Valkey/ElastiCache Redis clusters locally for development.
 
 ## What is Valkey?
 
-Valkey is a high-performance, Redis-compatible, in-memory database that maintains full compatibility with the Redis protocol, clients, and modules. This project provides an easy way to set up a 6-node Valkey cluster in a single Docker container for development purposes.
+Valkey is essentially a high-performance, Redis-compatible, in-memory database. It maintains full compatibility with the Redis protocol, clients, and modules. This project gives you a dead-simple way to set up a 6-node Valkey cluster in a single Docker container for development.
 
 ## AWS Valkey Local Development
 
-This project was created to simulate an AWS Valkey/ElastiCache Redis cluster in a local development environment. It allows developers to:
+I created this project to simulate an AWS Valkey/ElastiCache Redis cluster locally. It lets you:
 
-- Test applications against a cluster configuration identical to AWS deployments
-- Develop and debug code locally before deploying to production AWS environments
-- Benchmark performance and test application behavior without incurring AWS costs
-- Practice cluster management operations safely in a local environment
+- Test your apps against a cluster config that matches AWS deployments
+- Develop and debug code locally before pushing to production AWS environments
+- Run benchmarks and test behavior without burning AWS credits
+- Practice cluster management safely on your own machine
 
 ## Quick Start
 
-Clone the repo and run the cluster in three simple steps:
+Clone the repo and run the cluster in three quick steps:
 
 ```bash
-# 1. Create the config file
-echo "protected-mode no
-daemonize yes
-cluster-enabled yes" > valkey.conf
+# 1. Make sure you have the valkey.conf file (which you already do)
 
 # 2. Start the cluster
 ./start_valkey_cluster.sh
@@ -38,30 +35,29 @@ That's it! You now have a fully functional 6-node Valkey cluster running on port
 
 ## Advanced Benchmarking
 
-Want to put your cluster through its paces? Run the included benchmark tool:
+Want to see what your cluster can handle? Run the included benchmark tool:
 
 ```bash
 ./benchmark_valkey_cluster.py
 ```
 
-This will run a comprehensive suite of performance tests:
+This runs a comprehensive suite of performance tests:
 
 - Basic operations (SET/GET) in single and batch modes
-- Large object storage (10 x 50MB files)
-- Multi-connection throughput testing
-- Maximum performance stress testing with parallel operations
-- Memory usage monitoring
+- Large object storage (single 50MB object, with optional chunking)
+- Read and write performance measurement in MB/sec
+- Comparison between single-value and chunked storage approaches
 
-Results are saved as both pretty charts and detailed JSON in the `benchmarks/` directory, which is automatically created during the benchmark process.
+Results are saved as pretty charts and detailed JSON in the `benchmarks/` directory, which gets created automatically during the benchmark.
 
 ## Features
 
-- **AWS-like environment**: Simulates AWS Valkey/ElastiCache Redis cluster architecture locally
+- **AWS-like environment**: Mimics AWS Valkey/ElastiCache Redis cluster architecture locally
 - **Single-container deployment**: Runs 6 Valkey nodes in just one Docker container
-- **Auto-configuration**: Automatically creates a cluster with all nodes
-- **Persistent storage**: Data persists between restarts in `./valkey-data/`
-- **Battle-tested**: Includes comprehensive tests to verify functionality
-- **Performance analysis**: Detailed benchmarking tools to measure throughput
+- **Auto-configuration**: Sets up a cluster with all nodes automatically
+- **Persistent storage**: Your data sticks around between restarts in `./valkey-data/`
+- **Battle-tested**: Comes with solid tests to verify everything works
+- **Performance analysis**: Detailed benchmarking to see how fast things run
 
 ## System Requirements
 
@@ -85,11 +81,11 @@ chmod +x start_valkey_cluster.sh
 ./start_valkey_cluster.sh
 ```
 
-The script will:
-- Set up the directory structure
-- Launch a Docker container with 6 Valkey nodes
-- Configure them as a cluster
-- Show connection details when ready
+The script:
+- Sets up the directory structure
+- Launches a Docker container with 6 Valkey nodes
+- Configures them as a cluster
+- Shows connection details when ready
 
 ### 3. Test and Benchmark
 
@@ -145,7 +141,7 @@ docker start valkey-cluster
 
 ## Benchmark Results
 
-The benchmarking tool generates detailed performance metrics:
+The benchmarking tool generates some nice performance metrics:
 
 - Operations per second for basic commands
 - Throughput for large object storage
@@ -160,24 +156,24 @@ Basic Operations:
   • GET (single): 9,850.78 ops/sec
   • GET (pipeline): 186,420.32 ops/sec
 
-Large Files:
-  • Large Files Write (MB/s): 58.32 MB/sec
-  • Large Files Read (MB/s): 75.45 MB/sec
+Large Object:
+  • Large Write (MB/s): 58.32 MB/sec
+  • Large Read (MB/s): 75.45 MB/sec
 ```
 
 ## AWS vs Local Development Differences
 
-While this project aims to simulate AWS Valkey as closely as possible, be aware of these differences:
+While I've tried to make this mimic AWS Valkey as closely as possible, here are the key differences:
 
 - Single host deployment vs. multi-host in AWS
 - No network latency between nodes compared to AWS
-- No automatic failover handling as in AWS ElastiCache
+- No automatic failover handling like in AWS ElastiCache
 - Limited to 6 nodes instead of the larger clusters possible in AWS
 - No encryption in transit/at rest features
 
 ## Limitations
 
-This setup is designed for development and testing only:
+This setup is meant for development and testing only:
 
 - No replication (replica count is 0)
 - Single host deployment
@@ -193,14 +189,14 @@ Created by George Khananaev
 
 ---
 
-*Note: Valkey is fully compatible with Redis clients. If you're familiar with Redis, you'll feel right at home with Valkey.*
+*Note: Valkey plays nicely with all Redis clients. If you know Redis, you'll feel right at home with Valkey.*
 
 ## Cluster Details
 
 - All nodes run in a single Docker container
 - Ports: 6000-6005 mapped to localhost
-- Data is persisted in `./valkey-data/`
-- Each node has its own configuration and log files
+- Data persists in `./valkey-data/`
+- Each node has its own config and log files
 
 ## Common Commands
 
@@ -231,6 +227,6 @@ docker start valkey-cluster
 
 ## Notes
 
-- This is for development purposes only and not recommended for production
+- This is for development purposes only - I wouldn't recommend it for production
 - The cluster has no replicas (replica count is set to 0)
 - All data is stored locally in the `valkey-data` directory
