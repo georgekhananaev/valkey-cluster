@@ -1,0 +1,4 @@
+redis>=6.0.0b2
+tenacity>=9.1.2
+numpy~=2.2.2
+matplotlib~=3.10.1
