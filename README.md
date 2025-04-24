@@ -90,13 +90,9 @@ The script:
 ### 3. Test and Benchmark
 
 ```bash
-# Run basic tests
+# Run basic tests & performance benchmarks
 chmod +x test_valkey_cluster.py
 ./test_valkey_cluster.py
-
-# Run performance benchmarks
-chmod +x benchmark_valkey_cluster.py
-./benchmark_valkey_cluster.py
 ```
 
 ## Cluster Management
