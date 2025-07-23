@@ -31,6 +31,11 @@ Clone the repo and run the cluster in three quick steps:
 ./test_valkey_cluster.py
 ```
 
+Or as a one-liner:
+```bash
+git clone https://github.com/georgekhananaev/valkey-cluster.git && cd valkey-cluster && chmod +x start_valkey_cluster.sh && ./start_valkey_cluster.sh
+```
+
 That's it! You now have a fully functional 6-node Valkey cluster running on ports 6000-6005.
 
 ## Advanced Benchmarking
